@@ -1,12 +1,15 @@
-#include <string>
+﻿#include <string>
 #include <list>
 #include <vector>
 class Player;
 
+//가상의 클래스 메소드
 class Game
 {
 protected:
+	// 게임 이름
 	std::string gameName;
+	// 플레이어
 	std::list<Player*> players;
 	virtual void printGameName();
 public:
@@ -17,13 +20,9 @@ public:
 	void printAlivePlayers();
 	std::list<Player*> getAlivePlayers() { return players; };
 	
-	//Player* operator[](int index) { return players[index]; };
 };
 
-
-
-
-
+//무궁화 꽃이 피었습니다 게임
 class RedLightGreenLight : public Game
 {
 	friend class PlayerRLGL;
@@ -40,10 +39,7 @@ public:
 	void play();
 };
 
-
-
-
-
+// 가위바위보 게임
 class RPS : public Game
 {
 	friend class PlayerRPS;
@@ -55,10 +51,11 @@ public:
 	void play();
 };
 
+// 징검다리 건너기 게임
 class SteppingStone : public Game
 {
 	friend class PlayerSS;
-	const unsigned int howmanytimes = 5; // 5�� �ǳʾ� ��
+	const unsigned int howmanytimes = 5; // 5번 건너야 함
 public:
 	SteppingStone() : Game("Crossing stepping stone") {};
 	~SteppingStone() {};

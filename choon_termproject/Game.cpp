@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "Game.h"
 #include "Player.h"
 #include <time.h>
@@ -47,8 +47,9 @@ void RedLightGreenLight::play()
 		auto player = players.begin();
 		while (player != players.end())
 		{
+			// trueì¼ ê²½ìš° ìƒì¡´, distance ë„˜ì„ ê²½ìš° ê²Œì„ í†µê³¼
 			if ((*player)->isPlaying()) {
-				if ((*player)->act() && (*player)->gettotaldistance() > distance) // trueÀÏ °æ¿ì »ıÁ¸, distance ³ÑÀ» °æ¿ì °ÔÀÓ ³¡
+				if ((*player)->act() && (*player)->gettotaldistance() > distance) 
 				{
 					(*player)->notPlaying();
 					(*player)->escapeMessage();
@@ -57,7 +58,7 @@ void RedLightGreenLight::play()
 
 				else if ((*player)->act() && (*player)->gettotaldistance() <= distance)
 					++player;
-				else // falseÀÏ °æ¿ì die
+				else // falseì¼ ê²½ìš° die
 				{
 					(*player)->notPlaying();
 					(*player)->dyingMessage();
@@ -106,7 +107,7 @@ void RPS::join(Player* player)
 void RPS::play()
 {
 	printGameName();
-
+	//ê°€ìœ„ë°”ìœ„ë³´ í•˜ë ¤ë©´ 2ëª… ì´ìƒì´ì–´ì•¼ í•¨
 	if (players.size() < 2)
 	{
 		std::cout << "There are not sufficient players.";
@@ -138,31 +139,27 @@ void RPS::play()
 
 void SteppingStone::join(Player* player)
 {
-	players.push_back(new PlayerRPS(*player));
+	players.push_back(new PlayerSS(*player));
 }
 
 void SteppingStone::play()
 {
 	printGameName();
 	
-	// Á¤´äÁö¿Í ·£´ı ¼±ÅÃ ºñ±³
+	// ì •ë‹µì§€ì™€ ëœë¤ ì„ íƒ ë¹„êµ
 	auto player = players.begin();
 	while (player != players.end())
 	{
 		bool issame = true;
 		for (int i = 0; i < 5; i++)
-		{
+		{	//í•˜ë‚˜ë¼ë„ ì •ë‹µê³¼ ë‹¤ë¥¼ ì‹œ íƒˆë½
 			if ((*player)->_answer[i] != (*player)->_choice[i])
 			{
 				issame = false;
 				break;
 			}
-			else
-			{
-				continue;
-			}
 		}
-		if ((*player)->act() && issame) //  issameÀÌ trueÀÌ¾î¾ß »ıÁ¸
+		if ((*player)->act() && issame) //  issameì´ trueì´ì–´ì•¼ ìƒì¡´
 		{
 			++player;
 		}

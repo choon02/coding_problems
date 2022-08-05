@@ -1,8 +1,10 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "Game.h"
 
 std::default_random_engine Player::random_engine(time(nullptr));
+//ë¯¼ì²©ì„±
 std::uniform_int_distribution<unsigned int> Player::ability_range(0, 100);
+//ê¸°íšŒ
 std::uniform_real_distribution<float> Player::possibility(0.f, 1.f);
 
 float PlayerRLGL::fallDownRate = 0.1f;
@@ -17,26 +19,26 @@ Player::Player(int number)
 
 Player::Player(int number, int agility, int fearlessness)
 {
+	// player ë²ˆí˜¸
 	this->number = number;
+	// ë¯¼ì²©ì„±
 	this->agility = agility;
+	// ê² ì—†ìŒ
 	this->fearlessness = fearlessness;
 }
 
-
-
-
-
 bool PlayerRLGL::act()
 {
-	std::uniform_int_distribution<int> random1(0, 10); // for random_distance
+	std::uniform_int_distribution<int> random1(0, 10); 
 	std::uniform_int_distribution<int> random2(0, 100);
 	int random_distance = random1(random_engine);
 	int fearlessbonus_distance;
 	int random_bonus = random2(random_engine);
 	int random_number = random2(random_engine);
+	// bonus_chance ë°›ì•˜ìœ¼ë‚˜ 25%ì˜ í™•ë¥ ë¡œ ë–¨ì–´ì§
 	if (random_bonus <= fearlessness && random_number <= (int)RedLightGreenLight::fallDownRate * 100) 
-		// fearlessness°¡ Å¬¼ö·Ï if¹®ÀÇ Á¶°ÇÀ» ¸¸Á·ÇÒ È®·ü Áõ°¡// 25%ÀÇ È®·ü fallDownRate 1%ÀÌÇÏ ¼ıÀÚ ¹«½Ã
 		return false;
+	// bonus_chance ë°›ì•˜ê³  75%ì˜ í™•ë¥ ë¡œ ë” ê°
 	else if(random_bonus <= fearlessness && random_number > (int)RedLightGreenLight::fallDownRate * 100)
 	{
 		fearlessbonus_distance = agility * (fearlessness * 0.01);
@@ -44,11 +46,13 @@ bool PlayerRLGL::act()
 		Player::total_distance += this->current_distance;
 		return true;
 	}
+	// bonus_chance ëª» ë°›ìŒ //fearlessê°€ ë‚®ì„ ìˆ˜ë¡ bonus distanceì„ ë°›ì„ ìˆ˜ ìˆìœ¼ë‚˜ ë–¨ì–´ì§ˆ ìˆ˜ ìˆë‹¤.
 	else 
 	{
 		fearlessbonus_distance = 0;
 		this->current_distance = agility + random_distance + fearlessbonus_distance;
 		Player::total_distance += this->current_distance;
+		return true;
 	}
 }
 
@@ -81,7 +85,7 @@ bool PlayerRPS::act()
 	enum rpsType { Rock, Paper, Scissors };
 	auto rps = [] {
 		float p = possibility(random_engine);
-
+		// ê°€ìœ„ ë°”ìœ„ ë³´ ë°°ì •
 		if (p < float(1.f / 3.f))
 			return rpsType::Rock;
 		else if (p < float(2.f / 3.f))
@@ -96,7 +100,7 @@ bool PlayerRPS::act()
 		yourRPS = rps();
 	}
 	while(myRPS == yourRPS);
-	
+	// ê°€ìœ„ë°”ìœ„ë³´ ê·œì¹™ì— ë”°ë¥¸ ì¡°ê±´ë¬¸
 	if (myRPS == Rock)
 	{
 		if (yourRPS == Paper)
@@ -132,16 +136,17 @@ bool PlayerSS::act()
 	std::uniform_int_distribution<int> random(0, 1);
 	
 	for (int i = 0; i < 5; i++)
-	{
-		choice[i] = random(random_engine); //°°Àº ·£´ıÇÔ¼ö »ç¿ëÇØ¾ßÁö °°Àº ¼ıÀÚ¶ó°í ÀÎ½ÄÇÔ ´äÁö¸¦ ´Ù¸¥ class¿¡ µÑ ¼ö ¾ø¾úÀ½
+	{ // ì„ íƒê³¼ ì •ë‹µì„ ëœë¤ìœ¼ë¡œ ë°°ì •
+		choice[i] = random(random_engine);
 		answer[i] = random(random_engine);
 	}
-	for (int i = 0; i < 5 ; i++)//sizeof(choice) / sizeof(int); i++)
-	{
-		choice[i] = _choice[i]; //´äÁö¿Í ¼±ÅÃÀÌ ¸ğµÎ °°À» ¶§¸¸ »ıÁ¸ÇÏ´Â °ÍÀ¸·Î ¼³°è + fearlessness°¡ 50 ÃÊ°úÀÌ¾î¾ß ÇÔ
+	for (int i = 0; i < 5 ; i++)
+	{// game classì—ì„œ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ë°°ì—´ê°’ì„ ê·¸ëŒ€ë¡œ ì˜®ê²¨ì¤Œ
+		choice[i] = _choice[i]; 
 		answer[i] = _answer[i];
 	}
-	if (agility + fearlessness >= 120) // agility + fearlessness°¡ 120ÀÌÇÏÀÎ °æ¿ì µµÀü Æ÷±âÇÏ°Å³ª ¶³¾îÁü
+	// agility + fearlessnessê°€ 120ì´í•˜ì¸ ê²½ìš° ë„ì „ í¬ê¸°í•˜ê±°ë‚˜ ë–¨ì–´ì§
+	if (agility + fearlessness >= 120) 
 		return true;
 	else 
 		return false;

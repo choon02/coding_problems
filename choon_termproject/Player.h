@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <random>
 #include <time.h>
 
@@ -13,8 +13,8 @@ public:
 	virtual bool isPlaying() { return playing; };
 	void notPlaying() { playing = false; };
 	unsigned int gettotaldistance(){ return total_distance; }
-	int _choice[5]; // ´Ù¸¥ °÷¿¡ ÀÖÀ¸¸é Á¢±ÙÀÌ ºÒ°¡´ÉÇØ¼­ ¸¸µê
-	int _answer[5]; // .. ¸®ÅÍ·²·Î ¾²¸é ¾ÈµÇÁö¸¸ º¯¼ö·Î »ç¿ëÇÏ·Á°í ¸¹Àº ½Ã°£ ½ÃµµÇßÀ¸³ª Á¢±ÙÀÌ ¾ÈµÇ°Å³ª °´Ã¼¸¦ »ý¼ºÇØ¾ßµÇ¼­ ¸øÇß½À´Ï´Ù.
+	int _choice[5]; // ì§•ê²€ë‹¤ë¦¬ ê²Œìž„
+	int _answer[5]; 
 	void aliveMessage() { printStatus(); std::cout << " is alive." << std::endl; };
 	virtual void dyingMessage() { printStatus(); std::cout << " died." << std::endl; };
 	virtual void escapeMessage() { printStatus(); std::cout << "safely escaped from the groud" << std::endl; }
@@ -54,9 +54,9 @@ public:
 
 class PlayerSS : public Player
 {
-	int choice[5]; // ¼±ÅÃ ·£´ýÀ¸·Î player°¡ ¼±ÅÃÇÔ
+	int choice[5]; // ì„ íƒ ëžœë¤ìœ¼ë¡œ playerê°€ ì„ íƒí•¨
 	public:
-	int answer[5]; // Á¤´äÁö 1(¿À¸¥ÂÊ) 0(¿ÞÂÊ) Â¡°Ë´Ù¸® °Ç³Ê±â
+	int answer[5]; // ì •ë‹µì§€ 1(ì˜¤ë¥¸ìª½) 0(ì™¼ìª½) ì§•ê²€ë‹¤ë¦¬ ê±´ë„ˆê¸°
 	PlayerSS(const Player& player) : Player(player) { };
 	bool act();
 	void dyingMessage();
