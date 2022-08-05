@@ -3,23 +3,28 @@
 #include<string.h>
 #include<stdbool.h>
 
+// 구조체 선언
 typedef struct _astack
 {
 	char* data1;
 	bool* data2;
 	int stack_size;
 }astack;
+
+// 동적할당하기
 void initializeStack(astack* s, int stackMaxSize)
 {
 	s->data1 = calloc(stackMaxSize, sizeof(char));
 	s->data2 = calloc(stackMaxSize, sizeof(bool));
 	s->stack_size = 0;
 }
+// Stack의 push
 void pushStack(astack* s, char v1)
 {
 	s->data1[s->stack_size] = v1;
 	s->stack_size++;
 }
+// 피연산자가 1개인 경우
 void one(astack* s1, astack* s2)
 {
 	int ba;
@@ -77,6 +82,7 @@ void one(astack* s1, astack* s2)
 			}
 		}
 		truthtab[1] = s1->data2[strlen(copy)];
+		// 출력
 		for (int j = 0; j < 1; j++)
 		{
 			if (truthtab[j] == true)
@@ -92,6 +98,7 @@ void one(astack* s1, astack* s2)
 			printf("\n\n");
 	}
 }
+//피연산자가 2개인 경우
 void two(astack* s1, astack* s2)
 {
 	int ba, bb;
@@ -171,6 +178,7 @@ void two(astack* s1, astack* s2)
 			}
 		}
 		truthtab[2] = s1->data2[strlen(copy)];
+		// 출력
 		for (int j = 0; j < 2; j++)
 		{
 			if (truthtab[j] == true)
@@ -186,7 +194,7 @@ void two(astack* s1, astack* s2)
 			printf("\n\n");
 	}
 }
-
+//피연산자가 3개인 경우
 void three(astack *s1, astack *s2)
 {
 	int ba, bb, bc;
@@ -282,6 +290,7 @@ void three(astack *s1, astack *s2)
 			}
 		}
 		truthtab[3] = s1->data2[strlen(copy)];
+		//출력
 		for (int j = 0; j < 3; j++)
 		{
 			if (truthtab[j] == true)
@@ -297,6 +306,11 @@ void three(astack *s1, astack *s2)
 			printf("\n\n");
 	}
 }
+// 2 2 5
+// P i Q a Q
+// 2 3 7
+// P i Q a Q i P
+// 진리표 작성해주는 문제
 int main()
 {
 	int anum, onum, sum;
